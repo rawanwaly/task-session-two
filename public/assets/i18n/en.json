@@ -1,0 +1,7 @@
+{
+  "TITLE": "Tooltip Validator Demo",
+  "NAME_LABEL": "Name",
+  "EMAIL_LABEL": "Email",
+  "ONLY_LETTERS": "Only letters are allowed",
+  "INVALID_EMAIL": "Enter a valid email"
+}
