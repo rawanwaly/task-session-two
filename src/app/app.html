@@ -5,7 +5,6 @@
 
 <br><br>
 
-<!-- User Form -->
 <form #userForm="ngForm">
   <label>
     {{ 'NAME_LABEL' | translate }}:
@@ -45,7 +44,6 @@
 
 <br><br>
 
-<!-- Search Example -->
 <input type="text" placeholder="Search..." [(ngModel)]="searchTerm" />
 <ul>
   <li *ngFor="let book of books | search:searchTerm:['title','author','genre']">

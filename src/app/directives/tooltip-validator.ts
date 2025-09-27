@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
 })
 export class TooltipValidatorDirective implements OnDestroy {
   @Input('appTooltipValidator') config!: { 
-    message: string;   // this is the translation key (e.g. "ONLY_LETTERS")
+    message: string;    
     regex: RegExp; 
     preventInvalid?: boolean; 
   };
@@ -53,12 +53,9 @@ export class TooltipValidatorDirective implements OnDestroy {
       this.renderer.setStyle(this.errorElement, 'fontSize', '12px');
       this.renderer.setStyle(this.errorElement, 'marginLeft', '8px');
 
-      // insert translated text
       this.setTranslatedText();
 
       this.renderer.appendChild(labelElement, this.errorElement);
-
-      // update automatically if language is switched
       this.langChangeSub = this.translate.onLangChange.subscribe(() => {
         this.setTranslatedText(true);
       });
