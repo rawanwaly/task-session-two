@@ -3,50 +3,81 @@
 <button (click)="switchLang('en')">English</button>
 <button (click)="switchLang('ar')">العربية</button>
 
-<br><br>
+<div class="container">
+  <div class="search-section">
+    <input type="text" placeholder="Search..." [(ngModel)]="searchTerm" />
+    <ul>
+      <li *ngFor="let book of books | search : searchTerm : ['title', 'author', 'genre']">
+        {{ book.title }} - {{ book.author }} ({{ book.genre }})
+      </li>
+    </ul>
+    <p *ngIf="(books | search : searchTerm : ['title', 'author', 'genre']).length === 0">
+      {{ 'NO_RESULTS' | translate }}
+    </p>
+  </div>
 
-<form #userForm="ngForm">
-  <label>
-    {{ 'NAME_LABEL' | translate }}:
-    <input 
-      type="text"
-      #nameRef
-      placeholder="{{ 'NAME_LABEL' | translate }}"
-      [appTooltipValidator]="{
-        message: onlyLettersMsg,
-        regex: onlyLettersRegex,
-        preventInvalid: true
-      }"
-    />
-  </label>
+  <div class="form-section">
+    <form #userForm="ngForm">
+      <label>
+        {{ 'AR_NAME_LABEL' | translate }}:
+        <input
+          type="text"
+          #arNameRef
+          placeholder="{{ 'AR_NAME_LABEL' | translate }}"
+          [appTooltipValidator]="{
+            message: onlyArabicMsg,
+            regex: onlyArabicRegex,
+            preventInvalid: true
+          }"
+        />
+      </label>
 
-  <br><br>
+      <label>
+        {{ 'EN_NAME_LABEL' | translate }}:
+        <input
+          type="text"
+          #enNameRef
+          placeholder="{{ 'EN_NAME_LABEL' | translate }}"
+          [appTooltipValidator]="{
+            message: onlyLettersMsg,
+            regex: onlyEnglishRegex,
+            preventInvalid: true
+          }"
+        />
+      </label>
 
-  <label>
-    {{ 'EMAIL_LABEL' | translate }}:
-    <input 
-      type="text"
-      #emailRef
-      placeholder="{{ 'EMAIL_LABEL' | translate }}"
-      [appTooltipValidator]="{
-        message: invalidEmailMsg,
-        regex: emailRegex
-      }"
-    />
-  </label>
+      <label>
+        {{ 'EMAIL_LABEL' | translate }}:
+        <input
+          type="text"
+          #emailRef
+          placeholder="{{ 'EMAIL_LABEL' | translate }}"
+          [appTooltipValidator]="{
+            message: invalidEmailMsg,
+            regex: emailRegex
+          }"
+        />
+      </label>
 
-  <br><br>
+      <label>
+        {{ 'AGE_LABEL' | translate }}:
+        <input
+          type="text"
+          #ageRef
+          placeholder="{{ 'AGE_LABEL' | translate }}"
+          [appTooltipValidator]="{
+            message: invalidAgeMsg,
+            regex: ageRegex
+          }"
+        />
+      </label>
 
-  <button type="button" (click)="submitForm(nameRef.value, emailRef.value)">
-    Submit
-  </button>
-</form>
-
-<br><br>
-
-<input type="text" placeholder="Search..." [(ngModel)]="searchTerm" />
-<ul>
-  <li *ngFor="let book of books | search:searchTerm:['title','author','genre']">
-    {{ book.title }} - {{ book.author }} ({{ book.genre }})
-  </li>
-</ul>
+      <button
+        type="button"
+        (click)="submitForm(arNameRef.value, enNameRef.value, emailRef.value, ageRef.value)"
+      >
+        {{ 'SUBMIT' | translate }}
+      </button>
+    </form>
+  </div>
+</div>

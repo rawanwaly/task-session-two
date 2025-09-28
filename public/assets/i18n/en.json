@@ -1,7 +1,13 @@
 {
   "TITLE": "Tooltip Validator Demo",
-  "NAME_LABEL": "Name",
+  "NO_RESULTS": "No results found",
+  "AR_NAME_LABEL": "Arabic Name",
+  "EN_NAME_LABEL": "English Name",
   "EMAIL_LABEL": "Email",
-  "ONLY_LETTERS": "Only letters are allowed",
-  "INVALID_EMAIL": "Enter a valid email"
+  "AGE_LABEL": "Age",
+  "ONLY_ARABIC": "Only Arabic letters are allowed",
+  "ONLY_LETTERS": "Only English letters are allowed",
+  "INVALID_EMAIL": "Enter a valid email",
+  "INVALID_AGE": "Enter a valid age (18–50)",
+  "SUBMIT": "Submit"
 }

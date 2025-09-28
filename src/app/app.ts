@@ -5,25 +5,31 @@ import { TooltipValidatorDirective } from './directives/tooltip-validator';
 import { SearchPipe } from './pipes/search.pipe';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Book } from './data/book';
+import { MOCK_BOOKS } from './data/mock-books';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, TooltipValidatorDirective, TranslateModule, SearchPipe, FormsModule, CommonModule],
+  imports: [
+    RouterOutlet,
+    TooltipValidatorDirective,
+    TranslateModule,
+    SearchPipe,
+    FormsModule,
+    CommonModule,
+  ],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrl: './app.scss',
 })
 export class App {
-  title = signal('task-session-two');
+  title = signal('Tooltip Validator Demo');
 
-  onlyLettersRegex: RegExp = /^[a-zA-Z]*$/;
+  onlyArabicRegex: RegExp = /^[\u0600-\u06FF\s]*$/;
+  onlyEnglishRegex: RegExp = /^[a-zA-Z\s]*$/;
   emailRegex: RegExp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-
-  books = [
-    { title: 'Angular Basics', author: 'John Doe', genre: 'Programming' },
-    { title: 'Learning TypeScript', author: 'Jane Smith', genre: 'Programming' },
-    { title: 'The Great Gatsby', author: 'F. Scott Fitzgerald', genre: 'Novel' }
-  ];
+  ageRegex: RegExp = /^(?:1[89]|[2-9]\d|1[01]\d|50)$/;
+  books: Book[] = MOCK_BOOKS;
   searchTerm: string = '';
 
   constructor(private translate: TranslateService) {
@@ -31,18 +37,43 @@ export class App {
     translate.setDefaultLang('en');
   }
 
-  switchLang(lang: string) { this.translate.use(lang); }
+  switchLang(lang: string) {
+    this.translate.use(lang);
+  }
 
-  get onlyLettersMsg() { return this.translate.instant('ONLY_LETTERS'); }
-  get invalidEmailMsg() { return this.translate.instant('INVALID_EMAIL'); }
+  get onlyArabicMsg() {
+    return this.translate.instant('ONLY_ARABIC');
+  }
+  get onlyLettersMsg() {
+    return this.translate.instant('ONLY_LETTERS');
+  }
+  get invalidEmailMsg() {
+    return this.translate.instant('INVALID_EMAIL');
+  }
+  get invalidAgeMsg() {
+    return this.translate.instant('INVALID_AGE');
+  }
 
-  submitForm(name: string, email: string) {
-    if (!this.onlyLettersRegex.test(name)) {
-      alert(this.onlyLettersMsg); return;
+  submitForm(arName: string, enName: string, email: string, age: string) {
+    if (!this.onlyArabicRegex.test(arName)) {
+      alert(this.onlyArabicMsg);
+      return;
+    }
+    if (!this.onlyEnglishRegex.test(enName)) {
+      alert(this.onlyLettersMsg);
+      return;
     }
     if (!this.emailRegex.test(email)) {
-      alert(this.invalidEmailMsg); return;
+      alert(this.invalidEmailMsg);
+      return;
     }
-    alert(`Submitted!\nName: ${name}\nEmail: ${email}`);
+    if (!this.ageRegex.test(age)) {
+      alert(this.invalidAgeMsg);
+      return;
+    }
+
+    alert(
+      ` Submitted!\nArabic Name: ${arName}\nEnglish Name: ${enName}\nEmail: ${email}\nAge: ${age}`
+    );
   }
 }
